@@ -1,6 +1,7 @@
 package servletArticulos;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,13 +51,13 @@ public class ComprarServl extends HttpServlet {
 		Bean bean = new Bean();
 		Articulos mod = new Articulos();
 		HttpSession sesion = request.getSession();
-		
 		try
 		{
 			
 			bean.setNomArt(request.getParameter("txtNombre"));
 			bean.setIdArt(Integer.parseInt(request.getParameter("txtIdArt")));
-			bean.setCantidad(Integer.parseInt(request.getParameter("txtCantidad")));
+			String opt[]=request.getParameterValues("optCantidad");
+			bean.setCantidad(Integer.parseInt(opt[0]));
 			bean.setStock(Integer.parseInt(request.getParameter("txtStock")));
 			bean.setPrecio(Double.parseDouble(request.getParameter("txtPrecio")));
 			bean.setNomClient(sesion.getAttribute("usuario").toString());

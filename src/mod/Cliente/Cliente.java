@@ -19,16 +19,19 @@ public class Cliente
 		bean.getPass()+"','"+
 		bean.getTipo()+
 		"')";
-		
+		Conexion con = null;
 		try
 		{
-			Conexion con = new Conexion();
+			con = new Conexion();
 			con.actualizar(sql);
 		}
 		catch (Exception e) 
 		{
 			e.getStackTrace();
 			ins = e.getMessage();
+		}
+		finally{
+			con.closeConexion();
 		}
 		return ins;
 	}//fin insertar

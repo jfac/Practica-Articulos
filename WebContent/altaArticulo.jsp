@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registrate</title>
+<title>Alta Articulos</title>
 </head>
 <body>
+<c:if test="${not empty param.err}"><h2>${param.err}</h2></c:if>
 <%
 if(request.getParameter("err")!=null)
 {

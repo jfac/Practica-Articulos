@@ -5,7 +5,6 @@ import mod.Bd.*;
 
 import java.sql.ResultSet;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,9 +99,10 @@ public class Articulos
 	{
 		List<Bean> lst = new ArrayList<Bean>();
 		String sql = "select * from articulos";
+		Conexion con = null;
 		try 
 		{
-			Conexion con = new Conexion();
+			con = new Conexion();
 			ResultSet rset = con.ejecutar(sql);
 			while (rset.next()) 
 			{
@@ -117,11 +117,32 @@ public class Articulos
 		} 
 		catch (Exception e) 
 		{
+			lst = null;
 			e.printStackTrace();
+		}finally{
+			con.closeConexion();
 		}
 		return lst;
 	}//fin de la lista
-	
+	//verifica si esta vacia la consulta
+	public boolean isEmpty(){
+		boolean res = true;
+		String sql = "select count(*) from articulos";
+		Conexion con = null;
+		try {
+			con = new Conexion();
+			ResultSet rset = con.ejecutar(sql);
+			if(rset.next()){
+				res=false;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			res=true;
+		}finally{
+			con.closeConexion();
+		}
+		return res;
+	}
 	public Bean recuperarArt(String IdArt)
 	{
 		String sql = "select*from articulos where idArticulos="+IdArt;

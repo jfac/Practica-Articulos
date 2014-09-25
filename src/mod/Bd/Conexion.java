@@ -7,7 +7,7 @@ public class Conexion
 {
 	private String url = "jdbc:mysql://localhost/pracextra";
 	private String user = "root";
-	private String pass = "Skoliro";
+	private String pass = "M1B4S3D3D4T0S";
 	private Connection cnn = null;
 	private ResultSet rset;
 	private Statement stmt;
