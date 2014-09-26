@@ -2,6 +2,7 @@ package servletArticulos;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,10 +65,13 @@ public class ComprarServl extends HttpServlet {
 			String res = mod.Compra(bean);
 			if(res.equals("1"))
 			{
-			response.sendRedirect("listaComprado.jsp");
+				request.setAttribute("idVta", String.valueOf(bean.getIdVta()));
+				RequestDispatcher rd = request.getRequestDispatcher("listaComprado.jsp");
+				rd.forward(request, response);
 			}
 			else
 			{
+				
 				response.sendRedirect("carrito.jsp?err=Error no se pudo realizar su compra");
 			}
 		}

@@ -11,9 +11,8 @@ if (sesion.getAttribute("usuario") == null)
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.*" %>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id='listaArt' class="mod.Articulos.Venta" scope='request'></jsp:useBean>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,10 +26,11 @@ if (sesion.getAttribute("usuario") == null)
 
 <%
 BeanVenta bean = new BeanVenta();
-String idArt = request.getParameter("idArt");
-bean = listaArt.recuperarCompra(idArt);
+String idVta = request.getAttribute("idVta")==null?"": request.getAttribute("idVta").toString();
+bean = listaArt.recuperarCompra(idVta);
 %>
 <table>
+<%=request.getAttribute("idArt") %>
 <tr>
  <td>Clave Venta</td>
  <td>Clave Articulo</td>
