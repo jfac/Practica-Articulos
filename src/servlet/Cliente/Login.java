@@ -64,6 +64,7 @@ public class Login extends HttpServlet {
 				HttpSession sesion = request.getSession(true);
 				String jsp = comparar.comparar(bean.getTipo());
 				sesion.setAttribute("usuario", usuario);
+				sesion.setAttribute("id", bean.getIdClient());
 				response.sendRedirect(jsp);
 			}
 			else

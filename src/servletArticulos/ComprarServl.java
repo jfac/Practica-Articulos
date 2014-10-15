@@ -62,10 +62,12 @@ public class ComprarServl extends HttpServlet {
 			bean.setStock(Integer.parseInt(request.getParameter("txtStock")));
 			bean.setPrecio(Double.parseDouble(request.getParameter("txtPrecio")));
 			bean.setNomClient(sesion.getAttribute("usuario").toString());
+			bean.setIdClient(Integer.valueOf(sesion.getAttribute("id").toString()));
 			String res = mod.Compra(bean);
 			if(res.equals("1"))
 			{
 				request.setAttribute("idVta", String.valueOf(bean.getIdVta()));
+				request.setAttribute("idCli", bean.getIdClient());
 				RequestDispatcher rd = request.getRequestDispatcher("listaComprado.jsp");
 				rd.forward(request, response);
 			}
