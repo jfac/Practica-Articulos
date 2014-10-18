@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/Practica-Articulos" docBase="Practica-Articulos"
+   crossContext="true" reloadable="true">
+  <Resource name="jdbc/pracextra" auth="Container" 
+               maxActive="100" maxIdle="30" maxWait="10000"
+               username="root" password="M1B4S3D3D4T0S" type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/pracextra" />
+
+</Context>

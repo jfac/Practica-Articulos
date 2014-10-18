@@ -1,9 +1,21 @@
-Practica Universitaria Carrito de Compras Java Web
+# Practica-Articulos
 
-Modelo MVC
+## Description
 
-Base de datos pract.sql
+This is simple project to a shopping cart
 
-No requiere de configuracion del servidor.
+## Model
 
-No usa pool
+MVC
+
+## Database 
+
+MySQL
+
+### File for create de database
+
+pract.sql
+
+## Configuration
+
+This project use a pool for MySQL, if you use it you must change the user and password parameters for yours.

@@ -3,9 +3,9 @@
 <%@page import="bean.Bean.*"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:if test="${sessionScope.usuario==null }">
-	<c:redirect url="login.jsp" >
-		<c:param name="err" value="Inicie sesion para poder accesar..." />
-	</c:redirect>
+	<jsp:forward page="login.jsp">
+		<jsp:param name="err" value="Inicie sesion para poder accesar..."/>
+	</jsp:forward>
 </c:if>
 <jsp:useBean id='listaArt' class="mod.Articulos.Articulos" scope='request'></jsp:useBean>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
