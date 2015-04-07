@@ -1,7 +1,7 @@
 var x;
 function EliminarArticulo(idArt)
 {
-	if(confirm("Seguro que desa eliminar la escuela con id"+idArt+"?"))
+	if(confirm("Seguro que desa eliminar el articulo con id"+idArt+"?"))
 		{
 		  $.post("EliminarArticulo",{txtId:idArt},resultado);
 		  //return false;
