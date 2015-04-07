@@ -13,23 +13,27 @@ import javax.naming.NamingException;
 
 public class Conexion 
 {
-	private String url = "jdbc:mysql://localhost/pracextra";
-	private String user = "root";
-	private String pass = "M1B4S3D3D4T0S";
+	private static String url = "jdbc:mysql://localhost/pracextra";
+	private static String user = "root";
+	private static String pass = "M1B4S3D3D4T0S";
 	private Connection cnn = null;
 	private ResultSet rset;
 	private Statement stmt;
 	private InitialContext itc = null;
-	private Context cnt = null;
 	private DataSource ds = null;
 	
-	public Conexion()
+	public Conexion() throws SQLException
 	{
 		cnn = getCon();
 	}
 	
 	@SuppressWarnings("unused")
-	private Connection getConexion()
+	/**
+	 * Clase de conexion mediante JDBC MySql
+	 * @return MySql JDBC Connection
+	 * @exception SQLException
+	 */
+	private Connection getConexion() throws SQLException
 	{
 		try 
 		{
@@ -47,7 +51,12 @@ public class Conexion
 		}
 		return cnn;
 	}
-	private Connection getCon(){
+	/**
+	 * Clase de conexion mediante pool
+	 * @return POOL Connection
+	 * @exception SQLException
+	 */
+	private synchronized Connection getCon() throws SQLException{
 		try {
 			itc= new InitialContext();
 			ds = (DataSource) itc.lookup("java:comp/env/jdbc/pracextra");
@@ -58,15 +67,19 @@ public class Conexion
 				stmt = cnn.createStatement();
 			}
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
+			// the operation requested cannot be performed.
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// Sql Exception
 			e.printStackTrace();
 		}
 		return cnn;
 		
 	}
+	
+	/**
+	 * Cierra todas las conexiones
+	 */
 	public void closeConexion()
 	{
 		try 
@@ -90,8 +103,13 @@ public class Conexion
 			e.printStackTrace();
 		}
 	}
-	
-	public ResultSet ejecutar(String sql)
+	/**
+	 * Ejecuta una sentencia de sql
+	 * @param sql
+	 * @return ResultSet
+	 * @throws SQLException
+	 */
+	public ResultSet ejecutar(String sql) throws SQLException
 	{
 		if(stmt!=null)
 		{
@@ -106,8 +124,13 @@ public class Conexion
 		}
 		return rset;
 	}
-	
-	public int actualizar(String sql)
+	/**
+	 * Actualiza la bd mediante una sentencia de sql
+	 * @param sql
+	 * @return int 2 si fue exitosa
+	 * @throws SQLException
+	 */
+	public int actualizar(String sql) throws SQLException
 	{
 		int result = 0;
 		if(stmt!=null){

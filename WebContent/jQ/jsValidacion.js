@@ -1,43 +1,30 @@
 var x;
 x=$(document);
-x.ready(inicializarEventos);
+x.ready(inicialiazarEventos);
 
 function inicialiazarEventos()
 {
-	$("#frmArticulos").validate
+	$("#frmLogin").validate
 	(
 			{
 				rules:
 					{
-					txtStock:
+					txtUsuario:
 						{
 						required :true,
 						digits: true,
-						minlegth: 1,
-						maxlenght: 3
-						}?//fin txt
-			        txtNombre:
+						minlegth: 3,
+						maxlenght: 20
+						}?
+					txtPass:
 			        	{
 			        	required: true,
 			        	char:true,
 			        	minlegth:3,
 			        	maxlenght:45
-			        	}?
-			        txtPrecio:
-					    {
-					     required: true,
-					     digit:true,
-					     minlegth:4,
-					     maxlenght:10
-					    }?
-			        txtCantidad:
-					    {
-					     required: true,
-					     digit:true,
-					     minlegth:1,
-					     maxlenght:10
-					    }
+			        	}
 					}//finrules
 			}
 	);//fin frmArticulos
+	
 }

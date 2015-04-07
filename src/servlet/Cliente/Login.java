@@ -1,6 +1,8 @@
 package servlet.Cliente;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Bean;
-
 import mod.Cliente.Cliente;
 import mod.Cliente.Comparar;
 
@@ -46,16 +47,16 @@ public class Login extends HttpServlet {
 	
 	protected void doGetPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		Cliente mod = new Cliente();
-		Comparar comparar = new Comparar();
-		Bean bean = new Bean();
-
 		String password = request.getParameter("txtPass");
 		String usuario = request.getParameter("txtUsuario");
-
+		
+		RequestDispatcher rd;
 		if (password != "" && password != null && usuario != ""
 				&& usuario != null) 
 		{
+			Cliente mod = new Cliente();
+			Comparar comparar = new Comparar();
+			Bean bean = new Bean();
 			bean.setPass(password);
 			bean.setNomClient(usuario);
 
@@ -69,8 +70,17 @@ public class Login extends HttpServlet {
 			}
 			else
 			{
-				response.sendRedirect("login.jsp?err=Por favor introdusca usuario y contraseña correctos...");
+				//response.sendRedirect("login.jsp?err=Por favor introdusca usuario y contraseña correctos...");
+				request.setAttribute("err","Por favor introdusca usuario y contraseña correctos...");
+				rd = getServletContext().getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
 			}
+		}
+		else
+		{
+			request.setAttribute("err","Por favor introdusca usuario y contraseña correctos...");
+			rd = getServletContext().getRequestDispatcher("/login.jsp");
+			rd.forward(request, response);
 		}
 	}//finmetodo
 

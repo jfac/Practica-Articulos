@@ -24,8 +24,7 @@
 	<c:choose>
 		<c:when test="${listaArt.isEmpty()}">No hay articulos</c:when>
 		<c:otherwise>
-			<c:forEach items="${listaArt.recuperar()}" var="art"
-				varStatus="status">
+			<c:forEach items="${listaArt.recuperar()}" var="art" varStatus="status">
 				<div class="pane" id="${status.count}">
 					<div class="data">
 						<h3>${art.getNomArt()}</h3>
