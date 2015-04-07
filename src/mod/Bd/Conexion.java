@@ -8,7 +8,6 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 import javax.naming.InitialContext;
-import javax.naming.Context;
 import javax.naming.NamingException;
 
 public class Conexion 
@@ -104,7 +103,7 @@ public class Conexion
 		}
 	}
 	/**
-	 * Ejecuta una sentencia de sql
+	 * Metodo para ejecutar sentencias SELECT
 	 * @param sql
 	 * @return ResultSet
 	 * @throws SQLException
@@ -113,7 +112,7 @@ public class Conexion
 	{
 		if(stmt!=null)
 		{
-			try 
+			try
 			{
 				rset = stmt.executeQuery(sql);
 			} 
@@ -125,7 +124,7 @@ public class Conexion
 		return rset;
 	}
 	/**
-	 * Actualiza la bd mediante una sentencia de sql
+	 * Actualiza la bd mediante una sentencia de sql INSERT, DELETE, or UPDATE
 	 * @param sql
 	 * @return int 2 si fue exitosa
 	 * @throws SQLException
@@ -138,13 +137,60 @@ public class Conexion
 			{
 				result = stmt.executeUpdate(sql);
 			} 
-			catch (Exception e) 
+			catch (SQLException e) 
 			{
-				result = 2;
-				e.printStackTrace();
+				result = 0;
+				printSQLException(e);
 			}
 		}
 		return result;
 	}
+	/**
+	 * Method for custom print SQLExceptions
+	 * @param ex
+	 */
+	public static void printSQLException(SQLException ex){
+		for(Throwable e : ex){
+			if(e instanceof SQLException){
+				if(ignoreSQLException(((SQLException)e).getSQLState()) == false){
+					e.printStackTrace(System.err);
+					System.err.println("SQLState: "+
+					((SQLException)e).getSQLState()
+							);
+					
+					System.err.println("Error Code: "+
+							((SQLException)e).getErrorCode()
+									);
+					
+					System.err.println("Message "+ e.getMessage());
+					
+					Throwable t = ex.getCause();
+					while(t !=null){
+						System.out.println("Cause: " + t);
+						t = t.getCause();
+					}
+				}
+			}
+		}
+	}
+	/**
+	 * Method for ignore sql exceptions
+	 * @param sqlState
+	 * @return
+	 */
+	public static boolean ignoreSQLException(String sqlState) {
+	    if (sqlState == null) {
+	      System.out.println("The SQL state is not defined!");
+	      return false;
+	    }
+	    //just for example
+	    // X0Y32: Jar file already exists in schema
+	    if (sqlState.equalsIgnoreCase("X0Y32"))
+	      return true;
+	    // 42Y55: Table already exists in schema
+	    if (sqlState.equalsIgnoreCase("42Y55"))
+	      return true;
+	    return false;
+	  }
 
 }
