@@ -11,6 +11,11 @@ import java.util.List;
 
 public class Articulos {
 
+	/**
+	 * Insert into table articulos
+	 * @param bean
+	 * @return String number of rows affected or the error message
+	 */
 	public String insertar(Bean bean) {
 		String Ins = "1";
 		String sql = "INSERT INTO articulos(Nom,Stock,precio)" + "values('"
@@ -20,13 +25,18 @@ public class Articulos {
 			Conexion con = new Conexion();
 			con.actualizar(sql);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			Ins = e.getMessage();
 		}
 		return Ins;
 	}// fin insertar
 
+	/**
+	 * method to do a Sell
+	 * @param bean
+	 * @return 1 if the sell was correct or the message if something go wrong.
+	 * @throws ParseException
+	 */
 	public String Compra(Bean bean) throws ParseException {
 		String Ins = "1";
 		java.util.Date date = new java.util.Date();
@@ -48,7 +58,7 @@ public class Articulos {
 					+ bean.getIdClient() + "','" + dates + "')";
 			res = con.actualizar(sql);
 			if (res == 1) {
-				detalleCompra(bean);
+				Ins = detalleCompra(bean);
 			}
 
 		} catch (Exception e) {
@@ -61,7 +71,12 @@ public class Articulos {
 		return Ins;
 	}// fin comprar
 
-	public String detalleCompra(Bean bean) {
+	/**
+	 * Detail of the sell
+	 * @param bean
+	 * @return 1 if everything was correct or a error message if something was wrong
+	 */
+	private String detalleCompra(Bean bean) {
 		String Ins = "1";
 		String sqlvta = "select max(idVentas) from ventas";
 		Conexion con = null;
@@ -104,6 +119,10 @@ public class Articulos {
 		return Ins;
 	}// fin insertar
 
+	/**
+	 * A list of all the articulos
+	 * @return List Bean
+	 */
 	public List<Bean> recuperar() {
 		List<Bean> lst = new ArrayList<Bean>();
 		String sql = "select * from articulos";
@@ -130,6 +149,10 @@ public class Articulos {
 	}// fin de la lista
 		// verifica si esta vacia la consulta
 
+	/**
+	 * Method for show if the table articulos are fill
+	 * @return true if no articulos or false if there is something
+	 */
 	public boolean isEmpty() {
 		boolean res = true;
 		String sql = "select count(*) from articulos";
@@ -149,6 +172,11 @@ public class Articulos {
 		return res;
 	}
 
+	/**
+	 * Get the data of one article 
+	 * @param IdArt
+	 * @return bean of the idArticulos requested
+	 */
 	public Bean recuperarArt(String IdArt) {
 		String sql = "select*from articulos where idArticulos=" + IdArt;
 		Bean bean = new Bean();
@@ -168,6 +196,11 @@ public class Articulos {
 		return bean;
 	}// fin recuperar
 
+	/**
+	 * Update de table articulos with the current information
+	 * @param bean
+	 * @return String with the number of row affected or the error message if something go wrong
+	 */
 	public String actualizar(Bean bean) {
 		int modificar = 0;
 		String Modifi = "0";
@@ -189,6 +222,11 @@ public class Articulos {
 		return Modifi;
 	}// fin actualizarArticulos
 
+	/**
+	 * Delete an article using the requested id
+	 * @param idArt
+	 * @return The number of rows affected or the error message if something get wrong
+	 */
 	public String Eliminar(String idArt) {
 		String eliminar = "1";
 		String sql = "delete from articulos where idArticulos ='" + idArt + "'";

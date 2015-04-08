@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 
 import javax.sql.DataSource;
@@ -110,16 +111,22 @@ public class Conexion
 	 */
 	public ResultSet ejecutar(String sql) throws SQLException
 	{
+		//verify statement is created
 		if(stmt!=null)
 		{
 			try
 			{
 				rset = stmt.executeQuery(sql);
 			} 
-			catch (Exception e) 
+			catch (SQLException e) 
 			{
-				e.printStackTrace();
+				PracticaUtilities.printSQLException(e);
+				getWarningFromResulSet(rset);
 			}
+		}
+		else
+		{
+			getWarningFromStatement(stmt);
 		}
 		return rset;
 	}
@@ -132,6 +139,7 @@ public class Conexion
 	public int actualizar(String sql) throws SQLException
 	{
 		int result = 0;
+		//verify statement is created
 		if(stmt!=null){
 			try 
 			{
@@ -140,57 +148,46 @@ public class Conexion
 			catch (SQLException e) 
 			{
 				result = 0;
-				printSQLException(e);
+				PracticaUtilities.printSQLException(e);
 			}
+		}
+		else{
+			getWarningFromStatement(stmt);
 		}
 		return result;
 	}
+	
 	/**
-	 * Method for custom print SQLExceptions
-	 * @param ex
+	 * Custom warning message for ResultSet
+	 * @param res
+	 * @throws SQLException
 	 */
-	public static void printSQLException(SQLException ex){
-		for(Throwable e : ex){
-			if(e instanceof SQLException){
-				if(ignoreSQLException(((SQLException)e).getSQLState()) == false){
-					e.printStackTrace(System.err);
-					System.err.println("SQLState: "+
-					((SQLException)e).getSQLState()
-							);
-					
-					System.err.println("Error Code: "+
-							((SQLException)e).getErrorCode()
-									);
-					
-					System.err.println("Message "+ e.getMessage());
-					
-					Throwable t = ex.getCause();
-					while(t !=null){
-						System.out.println("Cause: " + t);
-						t = t.getCause();
-					}
-				}
-			}
+	public static void getWarningFromResulSet(ResultSet res) throws SQLException{
+		Conexion.printWarnings(res.getWarnings());
+	}
+	
+	/**
+	 * Custom warning message for Statements
+	 * @param stat
+	 * @throws SQLException
+	 */
+	public static void getWarningFromStatement(Statement stat)throws SQLException{
+		printWarnings(stat.getWarnings());
+	}
+	
+	/**
+	 * Private method to create the custom message for ResultSet and Statements
+	 * @param warning
+	 * @throws SQLException
+	 */
+	private static void printWarnings(SQLWarning warning) throws SQLException{
+		if(warning !=null){
+			System.out.println("Message " + warning.getMessage());
+			System.out.println("SQLState " + warning.getSQLState());
+			System.out.println("Vender error code: ");
+			System.out.println(warning.getErrorCode());
+			System.out.println(" ");
+			warning = warning.getNextWarning();
 		}
 	}
-	/**
-	 * Method for ignore sql exceptions
-	 * @param sqlState
-	 * @return
-	 */
-	public static boolean ignoreSQLException(String sqlState) {
-	    if (sqlState == null) {
-	      System.out.println("The SQL state is not defined!");
-	      return false;
-	    }
-	    //just for example
-	    // X0Y32: Jar file already exists in schema
-	    if (sqlState.equalsIgnoreCase("X0Y32"))
-	      return true;
-	    // 42Y55: Table already exists in schema
-	    if (sqlState.equalsIgnoreCase("42Y55"))
-	      return true;
-	    return false;
-	  }
-
 }
