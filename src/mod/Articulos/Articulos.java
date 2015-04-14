@@ -13,7 +13,7 @@ public class Articulos {
 
 	/**
 	 * Insert into table articulos
-	 * @param bean
+	 * @param Bean
 	 * @return String number of rows affected or the error message
 	 */
 	public String insertar(Bean bean) {
@@ -32,9 +32,9 @@ public class Articulos {
 	}// fin insertar
 
 	/**
-	 * method to do a Sell
-	 * @param bean
-	 * @return 1 if the sell was correct or the message if something go wrong.
+	 * method for a Sell
+	 * @param Bean
+	 * @return String if the sell was correct or the message if something go wrong.
 	 * @throws ParseException
 	 */
 	public String Compra(Bean bean) throws ParseException {
@@ -74,7 +74,7 @@ public class Articulos {
 	/**
 	 * Detail of the sell
 	 * @param bean
-	 * @return 1 if everything was correct or a error message if something was wrong
+	 * @return String 1 if everything was correct or a error message if something was wrong
 	 */
 	private String detalleCompra(Bean bean) {
 		String Ins = "1";
@@ -174,7 +174,7 @@ public class Articulos {
 
 	/**
 	 * Get the data of one article 
-	 * @param IdArt
+	 * @param String id of the article
 	 * @return bean of the idArticulos requested
 	 */
 	public Bean recuperarArt(String IdArt) {
@@ -198,7 +198,7 @@ public class Articulos {
 
 	/**
 	 * Update de table articulos with the current information
-	 * @param bean
+	 * @param Bean
 	 * @return String with the number of row affected or the error message if something go wrong
 	 */
 	public String actualizar(Bean bean) {
@@ -224,8 +224,8 @@ public class Articulos {
 
 	/**
 	 * Delete an article using the requested id
-	 * @param idArt
-	 * @return The number of rows affected or the error message if something get wrong
+	 * @param String id of the article
+	 * @return String The number of rows affected or the error message if something get wrong
 	 */
 	public String Eliminar(String idArt) {
 		String eliminar = "1";

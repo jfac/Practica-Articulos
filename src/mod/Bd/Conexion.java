@@ -71,7 +71,8 @@ public class Conexion
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// Sql Exception
-			e.printStackTrace();
+			//e.printStackTrace();
+			PracticaUtilities.printSQLException(e);
 		}
 		return cnn;
 		
@@ -105,7 +106,7 @@ public class Conexion
 	}
 	/**
 	 * Metodo para ejecutar sentencias SELECT
-	 * @param sql
+	 * @param String
 	 * @return ResultSet
 	 * @throws SQLException
 	 */
@@ -132,8 +133,8 @@ public class Conexion
 	}
 	/**
 	 * Actualiza la bd mediante una sentencia de sql INSERT, DELETE, or UPDATE
-	 * @param sql
-	 * @return int 2 si fue exitosa
+	 * @param String
+	 * @return int numero de rows afectados
 	 * @throws SQLException
 	 */
 	public int actualizar(String sql) throws SQLException
@@ -159,7 +160,7 @@ public class Conexion
 	
 	/**
 	 * Custom warning message for ResultSet
-	 * @param res
+	 * @param ResultSet
 	 * @throws SQLException
 	 */
 	public static void getWarningFromResulSet(ResultSet res) throws SQLException{
@@ -168,7 +169,7 @@ public class Conexion
 	
 	/**
 	 * Custom warning message for Statements
-	 * @param stat
+	 * @param Statement
 	 * @throws SQLException
 	 */
 	public static void getWarningFromStatement(Statement stat)throws SQLException{
@@ -177,7 +178,7 @@ public class Conexion
 	
 	/**
 	 * Private method to create the custom message for ResultSet and Statements
-	 * @param warning
+	 * @param SQLWarning
 	 * @throws SQLException
 	 */
 	private static void printWarnings(SQLWarning warning) throws SQLException{
